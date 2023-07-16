@@ -21,5 +21,5 @@ module.exports = app => {
     // Delete all Tasks
     router.delete("/", tasks.deleteAll);
   
-    app.use('/tasks', router);
+    app.use('/api/tasks', router);
 };
