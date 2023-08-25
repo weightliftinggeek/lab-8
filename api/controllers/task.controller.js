@@ -4,12 +4,34 @@ const Op = db.Sequelize.Op;
 
 // Create and Save a new Task
 exports.create = (req, res) => {
+    const task = {
+        description: req.body.description,
+        completed: req.body.completed || false
+     };
   
+     Task.create(task)
+         .then(data => {
+             res.send(data);
+         })
+         .catch(err => {
+             res.status(500).send({
+                 message:
+                 err.message || "Some error occurred"
+             });
+         });
 };
 
 // Retrieve all Tasks from the database.
 exports.findAll = (req, res) => {
-  
+    Task.findAll()
+    .then(data => {
+        res.send(data);
+    })
+    .catch(err => {
+        res.status(500).send({
+            message: err.message || "Some error occurred"
+        });
+    });
 };
 
 // Find a single Task with an id

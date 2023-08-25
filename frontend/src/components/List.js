@@ -38,7 +38,22 @@ function List(props) {
 	}
 
 	function onClick() {
-		props.setTasks(tasks => [...tasks, { id: tasks.length + 1, description: newTask, completed: false }]);
+		fetch('http://localhost/api/tasks', {
+            method: 'POST',
+            headers: {
+            'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ description: newTask, completed: false })
+        })
+            .then(response => response.json())
+            .then(data => {
+                props.setTasks(tasks => [...tasks, data]);
+            })
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+
+        setNewTask("");  // Clear the input field
 	}
 
 	return (

@@ -4,11 +4,16 @@ import './App.css';
 
 function App() {
 
-    const [tasks, setTasks] = useState([
-        { id: 1, description: 'Learn React', completed: true },
-        { id: 2, description: 'Learn JSX', completed: false },
-        { id: 3, description: 'Build a React App', completed: false }
-    ]);
+    const [tasks, setTasks] = useState([]);
+
+    useEffect(() => {
+        fetch('http://localhost/api/tasks')
+            .then(response => response.json())
+            .then(data => setTasks(data))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
+    }, []);
 
     return (
         <div className='page'>     
